@@ -26,3 +26,29 @@ export const addTask = createAsyncThunk(
     }
   }
 );
+
+export const deleteTask = createAsyncThunk(
+  "tasks/deleteTask",
+  async (taskId, thunkAPI) => {
+    try {
+      const responce = await axios.delete(`/tasks/${taskId}`);
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.maessage);
+    }
+  }
+);
+
+export const toggleCompleted = createAsyncThunk(
+  "tasks/toggleCompleted",
+  async (task, thunkAPI) => {
+    try {
+      const responce = await axios.put(`/tasks/${task.id}`, {
+        completed: !task.completed,
+      });
+      return responce.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
